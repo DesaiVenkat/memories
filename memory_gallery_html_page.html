@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Story</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: #0f172a;
+  color: #fff;
+  scroll-behavior: smooth;
+}
+
+header {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('images/first-meet.jpg') center/cover;
+}
+
+header h1 { font-size: 3rem; margin: 0; }
+header p { opacity: 0.8; }
+
+.music-control {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 50%;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 1000;
+}
+
+.timeline {
+  max-width: 900px;
+  margin: auto;
+  padding: 2rem 1rem;
+  position: relative;
+}
+
+.timeline::after {
+  content: '';
+  position: absolute;
+  width: 3px;
+  background: rgba(255,255,255,0.2);
+  top: 0;
+  bottom: 0;
+  left: 50%;
+}
+
+.container {
+  width: 50%;
+  padding: 2rem;
+  position: relative;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease;
+}
+
+.container.show { opacity: 1; transform: translateY(0); }
+.left { left: 0; }
+.right { left: 50%; }
+
+.content {
+  background: rgba(255,255,255,0.05);
+  padding: 1rem;
+  border-radius: 15px;
+  backdrop-filter: blur(10px);
+}
+
+.content img { width: 100%; border-radius: 10px; }
+
+.date { font-size: 0.8rem; color: #f472b6; }
+
+.love-message {
+  text-align: center;
+  margin: 40px 0;
+  font-size: 1.3rem;
+  color: #f472b6;
+  min-height: 30px;
+}
+
+.signature {
+  font-family: 'Brush Script MT', cursive;
+  font-size: 1.5rem;
+  color: #ff9acb;
+  display: block;
+  margin-top: 10px;
+}
+
+footer { text-align: center; padding: 1rem; opacity: 0.5; }
+
+@media(max-width:768px){
+  .timeline::after{ left:20px; }
+  .container{ width:100%; left:0; padding-left:50px; }
+}
+
+/* Bonsai */
+.bonsai {
+  text-align: center;
+  margin-top: 20px;
+  opacity: 0.8;
+  animation: float 4s ease-in-out infinite;
+}
+
+.bonsai img { width: 120px; }
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.ending-text {
+  text-align: center;
+  margin: 40px 0 20px;
+  font-size: 1.6rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 1s ease;
+}
+
+.ending-text.show { opacity: 1; transform: translateY(0); }
+
+</style>
+</head>
+
+<body>
+
+<audio id="bg-music" loop>
+  <source src="./music/song.mp3" type="audio/mpeg">
+</audio>
+<div class="music-control" onclick="toggleMusic()">🎵</div>
+
+<header>
+  <h1>Our Story ❤️</h1>
+  <p>From strangers to forever...</p>
+</header>
+
+<section class="timeline">
+
+<div class="container left">
+  <div class="content">
+    <div class="date">The Beginning</div>
+    <img src="./images/first-meet.jpeg">
+    <h3>First Meet</h3>
+  </div>
+</div>
+
+<div class="love-message" data-text="The day I saw you smile, everything felt different ❤️"></div>
+
+<div class="container right">
+  <div class="content">
+    <div class="date">A New Chapter</div>
+    <img src="./images/family.jpeg">
+    <h3>Family Agreement</h3>
+  </div>
+</div>
+
+<div class="love-message" data-text="Two families, one beautiful beginning 💖"></div>
+
+<div class="container left">
+  <div class="content">
+    <div class="date">Our First Date</div>
+    <img src="./images/holding-hands.jpeg">
+    <h3>First Date</h3>
+  </div>
+</div>
+
+<div class="love-message" data-text="Holding your hand felt like home 🤍"></div>
+
+<div class="container right">
+  <div class="content">
+    <div class="date">A Special Night</div>
+    <img src="./images/candle.jpeg">
+    <h3>Candle Light Dinner</h3>
+  </div>
+</div>
+
+<div class="love-message" data-text="In that quiet light, I found my forever ✨"></div>
+
+<div class="container left">
+  <div class="content">
+    <div class="date">My Favorite Memory</div>
+    <img src="./images/best.jpeg">
+    <h3>Us ❤️</h3>
+  </div>
+</div>
+
+<div class="love-message" id="final-message" data-text="Just like this Jade Bonsai, let our relation continue to find ways keep us curious, happy, excited and also keep these memories growing ❤️❤️❤️❤️!!"></div>
+
+<div class="bonsai">
+  <img src="./images/bonsai.jpg" alt="bonsai">
+</div>
+
+<div class="ending-text">✨ The Beginning of Forever ✨</div>
+
+</section>
+
+<footer>Made with ❤️</footer>
+
+<script>
+const music = document.getElementById('bg-music');
+let played=false;
+
+function toggleMusic(){
+  music.paused ? music.play() : music.pause();
+}
+
+document.body.addEventListener('click',()=>{
+  if(!played){ music.play(); played=true; }
+});
+
+const containers=document.querySelectorAll('.container');
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){ entry.target.classList.add('show'); }
+  });
+});
+containers.forEach(c=>observer.observe(c));
+
+const msgs=document.querySelectorAll('.love-message');
+function type(el,text,addSignature=false){
+ let i=0; el.innerHTML='';
+ function t(){
+  if(i<text.length){ 
+    el.innerHTML+=text[i++]; 
+    setTimeout(t,40); 
+  } else if(addSignature){
+    const sig=document.createElement('div');
+    sig.className='signature';
+    sig.innerText='- VSSD';
+    el.appendChild(sig);
+  }
+ }
+ t();
+}
+
+const obs2=new IntersectionObserver(entries=>{
+ entries.forEach(e=>{
+  if(e.isIntersecting && !e.target.classList.contains('done')){
+    const isFinal = e.target.id === 'final-message';
+    type(e.target,e.target.dataset.text,isFinal);
+    e.target.classList.add('done');
+  }
+ });
+});
+msgs.forEach(m=>obs2.observe(m));
+
+const ending = document.querySelector('.ending-text');
+const endObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){ ending.classList.add('show'); }
+  });
+});
+if(ending) endObserver.observe(ending);
+</script>
+
+</body>
+</html>
